@@ -1,0 +1,69 @@
+/*
+ *  @file      MAX6266.h
+ *  @author    Tamojit Saha
+ *  @website   www.tamojitsaha.info
+ *  
+ *  @license   CC-BY-SA 4.0(See license.txt) 
+ *  
+ *  I2C Driver for Maxim's MAX6626 12Bit Temperature Sensor
+ *  v1.0  - First Release
+ */
+
+#ifndef _MAX6626_H_
+#define _MAX6626_H_
+
+#if ARDUINO >= 100
+  #include "Arduino.h"
+#else
+  #include "WProgram.h"
+#endif
+
+#include "Wire.h"
+
+#define ADDR_GND              0x48
+#define ADDR_VCC              0x49
+#define ADDR_SDA              0x4A
+#define ADDR_SCL              0x4B
+
+#define TEMP_REG              0x00
+#define CONF_REG              0x01
+#define T_LOW_REG             0x02
+#define T_HIGH_REG            0x03
+
+#define CONF_REG_SHUTDOWN     0x01
+#define CONF_REG_COMP_INT     0x02      //Compare Mode or Interrupt Mode
+#define CONF_REG_OT_POLARITY  0x04
+
+#define FAULT_DEPTH_1         0x08
+#define FAULT_DEPTH_2         0x10
+#define FAULT_DEPTH_3         0x18
+#define FQ_BITS_CLEAR_MASK    0xE7
+
+class MAX6626
+{
+  public:
+  MAX6626();
+  boolean begin(uint8_t a= ADDR_GND);
+  float readTemp(void);
+  void sleep(void);
+  void wake(void);
+  void setInterruptMode(bool flag);
+  void setOTpolarity(bool flag);
+  void setFaultQueueDepth(uint8_t depth);
+  void setTHigh(int8_t t_high);
+  void setTLow(int8_t t_low);
+  float readTHigh(void);
+  float readTLow(void);
+  uint8_t readConfig(void);
+
+  private:
+  uint8_t i2caddr;
+  uint8_t conf_register;
+  void shutdown_wake(uint8_t sw);
+  void write16(uint8_t reg,uint16_t val);
+  uint16_t read16(uint8_t reg);
+  void write8(uint8_t reg, uint8_t val);
+  float rawToTemperature(uint16_t rawValue);
+  uint16_t temperatureToRaw(int8_t temp);
+};
+#endif

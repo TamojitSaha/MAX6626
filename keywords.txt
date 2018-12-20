@@ -1,0 +1,46 @@
+#######################################
+# Syntax Coloring Map For MAX6626
+####################################### 
+# Class (KEYWORD1)
+#######################################
+
+MAX6626	KEYWORD1	MAX6626
+
+
+#######################################
+# Methods and Functions (KEYWORD2)
+#######################################	
+
+readTemp	KEYWORD2
+
+sleep	KEYWORD2
+wake	KEYWORD2
+
+setInterruptMode	KEYWORD2
+setOTpolarity		KEYWORD2
+setFaultQueueDepth	KEYWORD2
+
+setTHigh	KEYWORD2
+setTLow		KEYWORD2
+readTHigh	KEYWORD2
+readTLow	KEYWORD2
+readConfig	KEYWORD2
+
+
+#######################################
+# Constants (LITERAL1)
+#######################################
+
+ADDR_GND	LITERAL1
+ADDR_VCC	LITERAL1
+ADDR_SDA	LITERAL1
+ADDR_SCL	LITERAL1
+
+#######################################
+# Variables (LITERAL2)
+#######################################
+
+1	LITERAL2
+2	LITERAL2
+3	LITERAL2
+0	LITERAL2

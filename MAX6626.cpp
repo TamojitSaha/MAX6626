@@ -15,9 +15,8 @@
 #include "WProgram.h"
 #endif
 
-#ifdef __AVR_ATtiny85__
+#if defined (__AVR_ATtiny85__) ||defined (__AVR_ATtiny45__)
 #include "TinyWireM.h"
-#define Wire TinyWireM
 #else
 #include <Wire.h>
 #endif

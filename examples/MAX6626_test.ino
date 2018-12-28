@@ -21,7 +21,7 @@
 #define __DEBUG__
 #endif
 
-#include "MAX6626.h"
+#include <MAX6626.h>
 
 //Create MAX6626 Temperature Sensor Object
 MAX6626 tempSensor = MAX6626();

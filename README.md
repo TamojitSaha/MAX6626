@@ -3,7 +3,7 @@ The MAX6626 combines a temperature sensor, a programmable overtemperature alarm,
 
 Please refer to the datasheet [here](https://datasheets.maximintegrated.com/en/ds/MAX6625-MAX6626.pdf) for further information.
 
-# Pinout and Application Circuit
+## Pinout and Application Circuit
 <p align="center">
   <img src = "extras/Application Circuit.png" height="150" width="450">
 </p>

@@ -1,2 +1,2 @@
-#MAX6626_library
+# MAX6626_library
 Contains datasheet, application circuit, breakout board for reference.

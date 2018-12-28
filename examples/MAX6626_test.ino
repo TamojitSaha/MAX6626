@@ -1,8 +1,9 @@
 /*
     @file      MAX6266.ino
     @author    Tamojit Saha
-    @website   www.tamojitsaha.info
-
+    @website   https://www.tamojitsaha.info
+    
+    @Library   https://github.com/TamojitSaha/MAX6626_library
     @license   CC-BY-SA 4.0(See license.txt)
 
     This is a demo sketch for interfacing with MAX6266

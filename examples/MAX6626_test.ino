@@ -11,7 +11,7 @@
 
     UPDATE: 
     21 Dec 2018
-      - Added support for ATtiny 85 and ATtiny 45
+      - Added support for ATtiny 85 and ATtiny 45 but not tested.
 */
 
 #if defined(__AVR_ATtiny85__) || defined (__AVR_ATtiny45__)

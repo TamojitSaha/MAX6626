@@ -1,9 +1,11 @@
 /*
     @file      MAX6266.cpp
     @author    Sandeepan Sengupta, Tamojit Saha
-    @website   http://www.tamojitsaha.info
+    @website  https://www.sandeepan.info,
+              https://www.tamojitsaha.info
 
-    @license   CC-BY-SA 4.0(See license.txt)
+    @Library   https://github.com/TamojitSaha/MAX6626
+    @license   CC-BY-SA 4.0
 
     I2C Driver for Maxim's MAX6626 12Bit Temperature Sensor
     Version 1.0.1 -First Patch for v1.0
@@ -66,7 +68,7 @@ void MAX6626::wake() {
 }
 
 void MAX6626::setWakeDelay(uint32_t wkDelay) {
-	wakeDelay = wkDelay;
+  wakeDelay = wkDelay;
 }
 
 void MAX6626::setInterruptMode(bool sw)
@@ -103,43 +105,38 @@ void MAX6626::setOTpolarity(bool sw)
   }
 }
 
-void MAX6626::setFaultQueueDepth(uint8_t depth)
+void MAX6626::setFaultQueueDepth(depth _depth)
 {
   volatile uint8_t  reg = (uint8_t)readConfig();
-  if (depth < 0) depth = 0;
-  if (depth > 3) depth = 3;
-  if (depth >= 0 && depth <= 3)
+  switch (_depth)
   {
-    switch (depth)
-    {
-      case 0:
-        reg &= FQ_BITS_CLEAR_MASK;
-        conf_register = reg;
+    case 0:
+      reg &= FQ_BITS_CLEAR_MASK;
+      conf_register = reg;
 
-        write8(CONF_REG, conf_register);
-        break;
+      write8(CONF_REG, conf_register);
+      break;
 
-      case 1:
-        reg &= FQ_BITS_CLEAR_MASK;
-        reg |= FAULT_DEPTH_1;
-        conf_register = reg;
-        write8(CONF_REG, conf_register);
-        break;
+    case 1:
+      reg &= FQ_BITS_CLEAR_MASK;
+      reg |= FAULT_DEPTH_1;
+      conf_register = reg;
+      write8(CONF_REG, conf_register);
+      break;
 
-      case 2:
-        reg &= FQ_BITS_CLEAR_MASK;
-        reg |= FAULT_DEPTH_2;
-        conf_register = reg;
-        write8(CONF_REG, conf_register);
-        break;
+    case 2:
+      reg &= FQ_BITS_CLEAR_MASK;
+      reg |= FAULT_DEPTH_2;
+      conf_register = reg;
+      write8(CONF_REG, conf_register);
+      break;
 
-      case 3:
-        reg &= FQ_BITS_CLEAR_MASK;
-        reg |= FAULT_DEPTH_3;
-        conf_register = reg;
-        write8(CONF_REG, conf_register);
-        break;
-    }
+    case 3:
+      reg &= FQ_BITS_CLEAR_MASK;
+      reg |= FAULT_DEPTH_3;
+      conf_register = reg;
+      write8(CONF_REG, conf_register);
+      break;
   }
 }
 

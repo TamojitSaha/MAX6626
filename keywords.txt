@@ -28,19 +28,31 @@ readConfig	KEYWORD2
 
 
 #######################################
+# Data Types (LITERAL1)
+#######################################
+
+address	LITERAL1
+depth	LITERAL1
+
+
+#######################################
 # Constants (LITERAL1)
 #######################################
 
+f1	LITERAL1
+f2	LITERAL1
+f3	LITERAL1
+f4	LITERAL1
+F1	LITERAL1
+F2	LITERAL1
+F3	LITERAL1
+F4	LITERAL1
 ADDR_GND	LITERAL1
 ADDR_VCC	LITERAL1
 ADDR_SDA	LITERAL1
 ADDR_SCL	LITERAL1
 
+
 #######################################
 # Variables (LITERAL2)
 #######################################
-
-1	LITERAL2
-2	LITERAL2
-3	LITERAL2
-0	LITERAL2

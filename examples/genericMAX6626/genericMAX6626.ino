@@ -1,18 +1,14 @@
 /*
-    @file      MAX6266.ino
-    @author    Tamojit Saha
-    @website   https://www.tamojitsaha.info
-    
-    @Library   https://github.com/TamojitSaha/MAX6626_library
-    @license   CC-BY-SA 4.0(See license.txt)
+    @file      genericMAX6626.ino
+    @author    Sandeepan Sengupta, Tamojit Saha
+    @website  https://www.sandeepan.info,
+              https://www.tamojitsaha.info
+
+    @Library   https://github.com/TamojitSaha/MAX6626
+    @license   CC-BY-SA 4.0
 
     This is a demo sketch for interfacing with MAX6266
-
     This sketch assumes that ADDR pin is conncted to GND.
-
-    UPDATE: 
-    21 Dec 2018
-      - Added support for ATtiny 85 and ATtiny 45 but not tested.
 */
 
 #if defined(__AVR_ATtiny85__) || defined (__AVR_ATtiny45__)
@@ -22,6 +18,7 @@
 #endif
 
 #include <MAX6626.h>
+//#include "MAX6626.h"
 
 //Create MAX6626 Temperature Sensor Object
 MAX6626 tempSensor = MAX6626();
@@ -34,7 +31,7 @@ void setup()
   //tempSensor.begin(ADDR_VCC)
   //tempSensor.begin(ADDR_SCL)
   //tempSensor.begin(ADDR_SDA)
-  if (!tempSensor.begin())    //Default: tempSensor.begin(ADDR_GND)
+  if (!tempSensor.begin(ADDR_GND))    //Default: tempSensor.begin(ADDR_GND)
   {
 #ifdef __DEBUG__
     Serial.println("MAX6626 not found!");
@@ -46,8 +43,13 @@ void setup()
 void loop()
 {
   /*Wake up MAX6626*/
-  //Serial.println("Wake up MAX6626");
-  //tempSensor.wake();
+  tempSensor.setWakeDelay(250);
+  Serial.print("Wake up MAX6626 in:\t");
+  uint32_t timeStamp = millis();
+  tempSensor.wake();
+  uint32_t lapseTime = millis() - timeStamp;
+  Serial.print(lapseTime);
+  Serial.println("ms");
 
   //Read and print the temperature
   float c = tempSensor.readTemp();          //returns value in deg C

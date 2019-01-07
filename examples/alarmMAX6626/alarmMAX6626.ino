@@ -1,10 +1,11 @@
 /*
-    @file      MAX6266.ino
-    @author    Tamojit Saha
-    @website   https://www.tamojitsaha.info
-    
-    @Library   https://github.com/TamojitSaha/MAX6626_library
-    @license   CC-BY-SA 4.0(See license.txt)
+    @file      alarmMAX6626.ino
+    @author    Sandeepan Sengupta, Tamojit Saha
+    @website  https://www.sandeepan.info,
+              https://www.tamojitsaha.info
+
+    @Library   https://github.com/TamojitSaha/MAX6626
+    @license   CC-BY-SA 4.0
 
     This sketch demonstrates how temperature thresholds
     can be defined. THigh and TLow are 8 bit regiters
@@ -30,10 +31,10 @@
      +-------+---------------+
      | Depth | No. of Faults |
      +-------+---------------+
-     |     0 | 1(default)    |
-     |     1 | 2             |
-     |     2 | 4             |
-     |     3 | 6             |
+     |  f1,F1| 1 (default)   |
+     |  f2,F2| 2             |
+     |  f4,F4| 4             |
+     |  f6,F6| 6             |
      +-------+---------------+     * 
    
    This sketch assumes that ADDR pin is conncted to GND.
@@ -68,7 +69,7 @@ void setup()
   setTempThresholds(25, 22);
 
   //Setting Fault Queue Depth to 6
-  tempSensor.setFaultQueueDepth(3);
+  tempSensor.setFaultQueueDepth(f6);
 }
 
 

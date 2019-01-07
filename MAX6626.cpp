@@ -1,14 +1,16 @@
 /*
- *  @file      MAX6266.cpp
- *  @author    Tamojit Saha
- *  @website   www.tamojitsaha.info
- *  
- *  @license   CC-BY-SA 4.0(See license.txt) 
- *  
- *  I2C Driver for Maxim's MAX6626 12Bit Temperature Sensor
- *  v1.0  - First Release
- */
- 
+    @file      MAX6266.cpp
+    @author    Sandeepan Sengupta, Tamojit Saha
+    @website  https://www.sandeepan.info,
+              https://www.tamojitsaha.info
+
+    @Library   https://github.com/TamojitSaha/MAX6626
+    @license   CC-BY-SA 4.0
+
+    I2C Driver for Maxim's MAX6626 12Bit Temperature Sensor
+    Version 1.0.1 -First Patch for v1.0
+*/
+
 #if ARDUINO >= 100
 #include "Arduino.h"
 #else
@@ -26,12 +28,12 @@
 MAX6626::MAX6626() {
 }
 
-boolean MAX6626::begin(uint8_t addr)
+boolean MAX6626::begin(address addr)
 {
   Wire.begin();
   i2caddr = addr;
   conf_register = readConfig();
-  
+
   Wire.beginTransmission(i2caddr);
   uint8_t err = Wire.endTransmission();
   if (err != 0)
@@ -61,8 +63,12 @@ void MAX6626::sleep() {
 }
 
 void MAX6626::wake() {
-  shutdown_wake(0);
-  _delay_ms(250);
+  shutdown_wake(false);
+  delay(wakeDelay);
+}
+
+void MAX6626::setWakeDelay(uint32_t wkDelay) {
+  wakeDelay = wkDelay;
 }
 
 void MAX6626::setInterruptMode(bool sw)
@@ -99,57 +105,52 @@ void MAX6626::setOTpolarity(bool sw)
   }
 }
 
-void MAX6626::setFaultQueueDepth(uint8_t depth) 
+void MAX6626::setFaultQueueDepth(depth _depth)
 {
   volatile uint8_t  reg = (uint8_t)readConfig();
-  if (depth < 0) depth = 0;
-  if (depth > 3) depth = 3;
-  if (depth >= 0 && depth <= 3)
+  switch (_depth)
   {
-    switch (depth)
-    {
-      case 0:
-        reg &= FQ_BITS_CLEAR_MASK;
-        conf_register = reg;
+    case 0:
+      reg &= FQ_BITS_CLEAR_MASK;
+      conf_register = reg;
 
-        write8(CONF_REG, conf_register);
-        break;
+      write8(CONF_REG, conf_register);
+      break;
 
-      case 1:
-        reg &= FQ_BITS_CLEAR_MASK;
-        reg |= FAULT_DEPTH_1;
-        conf_register = reg;
-        write8(CONF_REG, conf_register);
-        break;
+    case 1:
+      reg &= FQ_BITS_CLEAR_MASK;
+      reg |= FAULT_DEPTH_1;
+      conf_register = reg;
+      write8(CONF_REG, conf_register);
+      break;
 
-      case 2:
-        reg &= FQ_BITS_CLEAR_MASK;
-        reg |= FAULT_DEPTH_2;
-        conf_register = reg;
-        write8(CONF_REG, conf_register);
-        break;
+    case 2:
+      reg &= FQ_BITS_CLEAR_MASK;
+      reg |= FAULT_DEPTH_2;
+      conf_register = reg;
+      write8(CONF_REG, conf_register);
+      break;
 
-      case 3:
-        reg &= FQ_BITS_CLEAR_MASK;
-        reg |= FAULT_DEPTH_3;
-        conf_register = reg;
-        write8(CONF_REG, conf_register);
-        break;
-    }
+    case 3:
+      reg &= FQ_BITS_CLEAR_MASK;
+      reg |= FAULT_DEPTH_3;
+      conf_register = reg;
+      write8(CONF_REG, conf_register);
+      break;
   }
 }
 
-void MAX6626::setTHigh(int8_t t_high) 
+void MAX6626::setTHigh(int8_t t_high)
 {
   write16(T_HIGH_REG, temperatureToRaw(t_high));
 }
 
-void MAX6626::setTLow(int8_t t_low) 
+void MAX6626::setTLow(int8_t t_low)
 {
   write16(T_LOW_REG, temperatureToRaw(t_low));
 }
 
-uint8_t MAX6626::readConfig() 
+uint8_t MAX6626::readConfig()
 {
   Wire.beginTransmission(i2caddr);
   Wire.write(CONF_REG);
@@ -161,7 +162,7 @@ uint8_t MAX6626::readConfig()
   return config_reg;
 }
 
-float MAX6626::readTHigh() 
+float MAX6626::readTHigh()
 {
   uint16_t _th = read16(T_HIGH_REG);
   float t_high = rawToTemperature(_th);
@@ -170,7 +171,7 @@ float MAX6626::readTHigh()
 }
 
 
-float MAX6626::readTLow() 
+float MAX6626::readTLow()
 {
   uint16_t _tl = read16(T_LOW_REG);
   float t_low = rawToTemperature(_tl);
@@ -259,4 +260,3 @@ uint16_t MAX6626:: temperatureToRaw(int8_t temp)
   val <<= 8;
   return val;
 }
-

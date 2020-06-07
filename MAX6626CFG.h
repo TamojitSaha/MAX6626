@@ -15,10 +15,10 @@
 
 typedef enum
 {
-  ADDR_VCC = 0x48,
-  ADDR_GND = 0x49,
-  ADDR_SCL = 0x4A,
-  ADDR_SDA = 0x4B
+  ADDR_VCC = 0b1001001,
+  ADDR_GND = 0b1001000,
+  ADDR_SCL = 0b1001011,
+  ADDR_SDA = 0b1001010
 } address;
 
 typedef enum
